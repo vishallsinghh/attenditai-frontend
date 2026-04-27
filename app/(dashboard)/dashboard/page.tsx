@@ -3,31 +3,18 @@
 import { useSession, signOut } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
 
 export default function DashboardPage() {
-  const { data: session, isPending } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
 
-  if (isPending) {
+  if (!session) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p>Loading...</p>
       </div>
     );
   }
-useEffect(() => {
-  if (!session && !isPending) {
-    router.push("/sign-in");
-  }
-}, [session, isPending, router]);
- if (!session) {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p>Loading...</p>
-    </div>
-  );
-}
 
   return (
     <div className="min-h-screen p-8">
